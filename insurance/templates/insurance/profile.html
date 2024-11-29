@@ -1,0 +1,46 @@
+<!-- profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+
+    <h1>Profile Details</h1>
+    
+    <h2>Username: {{ profile.user.username }}</h2>
+    <p>Email: {{ profile.user.email }}</p>
+    <p>Phone Number: {{ profile.phone_number }}</p>
+    <p>Address: {{ profile.address }}</p>
+
+    <h2>Purchased Policies</h2>
+    {% if purchased_policies %}
+        <ul>
+            {% for user_policy in purchased_policies %}
+                <li>
+                    <p>Policy: {{ user_policy.policy.name }}</p>
+                    <p>Plan: {{ user_policy.plan }}</p>
+                    <p>Start Date: {{ user_policy.start_date }}</p>
+                    <p>End Date: {{ user_policy.end_date }}</p>
+
+                    <!-- Button to upgrade policy -->
+                    <a href="{% url 'upgrade_policy' user_policy.policy.name %}">Upgrade or Downgrade Policy</a>
+
+                    <!-- Button to delete policy -->
+                    <a href="{% url 'delete_policy' user_policy.policy.name %}">Delete Policy</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No policies purchased yet.</p>
+    {% endif %}
+    
+    <a href="{% url 'update_profile' %}">Update Profile</a>
+</body>
+</html>

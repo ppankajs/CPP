@@ -1,0 +1,20 @@
+<!-- policies_details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Policy Details</title>
+</head>
+<body>
+    <h2>{{ policy.name }}</h2>
+    <p>{{ policy.description }}</p>
+    {% if policy.image %}
+        <img src="{{ policy.image.url }}" alt="Policy Image">
+    {% endif %}
+    {% if policy.additional_details %}
+        <h3>Additional Details:</h3>
+        <p>{{ policy.additional_details }}</p>
+    {% endif %}
+    <p>Price: ${{ policy.price }}</p>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

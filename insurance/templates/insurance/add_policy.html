@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Policy</title>
+</head>
+<body>
+    <h1>Add New Policy</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Policy Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" required></textarea><br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" step="0.01" required><br>
+
+        <label for="default">Mark as Default:</label>
+        <input type="checkbox" name="default"><br>
+
+        <label for="image">Policy Image:</label>
+        <input type="file" name="image"><br>
+
+        <button type="submit">Add Policy</button>
+    </form>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
