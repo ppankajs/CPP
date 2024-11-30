@@ -1,0 +1,187 @@
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 98%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-message {
+    margin-right: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 30px;
+}
+
+/* Profile Header */
+.profile-container h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Titles */
+.profile-container h2 {
+    font-size: 20px;
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* User Details */
+.user-details p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.user-details p strong {
+    color: #222;
+}
+
+/* Purchased Policies */
+.purchased-policies ul {
+    list-style: none;
+    padding: 0;
+}
+
+.purchased-policies li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.purchased-policies p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.policy-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.policy-actions .action-button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #fff;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.policy-actions .upgrade-button {
+    background-color: #007bff; /* Blue */
+}
+
+.policy-actions .upgrade-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.policy-actions .delete-button {
+    background-color: #dc3545; /* Red */
+}
+
+.policy-actions .delete-button:hover {
+    background-color: #a71d2a;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+}
+
+/* Update Profile Button */
+.update-profile-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.update-profile-container a {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745; /* Green */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.update-profile-container a:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav a {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .policy-actions {
+        flex-direction: column;
+    }
+
+    .policy-actions .action-button {
+        width: 100%;
+        text-align: center;
+    }
+}

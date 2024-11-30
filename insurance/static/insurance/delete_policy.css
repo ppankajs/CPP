@@ -1,0 +1,129 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar Styling */
+nav {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 98%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-message {
+    margin-right: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Main Container */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 100px 20px; /* Adds padding to account for the fixed navbar */
+    background: rgba(0, 0, 0, 0.5); /* Transparent overlay for better contrast */
+    box-sizing: border-box;
+}
+
+/* Header */
+.profile-container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Delete Policy Section */
+.delete-policy-details {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.delete-policy-details p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Policy Actions */
+.policy-actions {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+/* Buttons */
+.action-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.delete-button {
+    background-color: #d9534f;
+}
+
+.delete-button:hover {
+    background-color: #c9302c;
+}
+
+.cancel-button {
+    background-color: #5bc0de;
+    display: inline-block;
+    text-align: center;
+}
+
+.cancel-button:hover {
+    background-color: #31b0d5;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .delete-policy-details {
+        padding: 15px 20px;
+    }
+
+    .action-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}

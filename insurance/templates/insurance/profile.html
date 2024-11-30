@@ -1,46 +1,76 @@
-<!-- profile.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'insurance/profile.css' %}">
 </head>
-<body>
+<body style="background-image: url('{% static 'images/bike.jpeg'%}'); background-size: cover; background-position: center;">
+    <!-- Navigation Bar -->
     <nav>
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'view_all_users' %}" class="button">View Users</a>
+                {% endif %}
+                <a href="{% url 'profile' %}" class="welcome-message">Welcome, {{ user.username }}</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Register</a>
+            {% endif %}
+        </div>
     </nav>
 
-    <h1>Profile Details</h1>
-    
-    <h2>Username: {{ profile.user.username }}</h2>
-    <p>Email: {{ profile.user.email }}</p>
-    <p>Phone Number: {{ profile.phone_number }}</p>
-    <p>Address: {{ profile.address }}</p>
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <h1>User Profile</h1>
 
-    <h2>Purchased Policies</h2>
-    {% if purchased_policies %}
-        <ul>
-            {% for user_policy in purchased_policies %}
-                <li>
-                    <p>Policy: {{ user_policy.policy.name }}</p>
-                    <p>Plan: {{ user_policy.plan }}</p>
-                    <p>Start Date: {{ user_policy.start_date }}</p>
-                    <p>End Date: {{ user_policy.end_date }}</p>
+        <!-- User Details -->
+        <section class="user-details">
+            <h2>Profile Details</h2>
+            <p><strong>Username:</strong> {{ profile.user.username }}</p>
+            <p><strong>Email:</strong> {{ profile.user.email }}</p>
+            <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+            <p><strong>Address:</strong> {{ profile.address }}</p>
+        </section>
 
-                    <!-- Button to upgrade policy -->
-                    <a href="{% url 'upgrade_policy' user_policy.policy.name %}">Upgrade or Downgrade Policy</a>
+        <!-- Purchased Policies -->
+        <section class="purchased-policies">
+            <h2>Purchased Policies</h2>
+            {% if purchased_policies %}
+                <ul>
+                    {% for user_policy in purchased_policies %}
+                        <li>
+                            <p><strong>Policy:</strong> {{ user_policy.policy.name }}</p>
+                            <p><strong>Plan:</strong> {{ user_policy.plan }}</p>
+                            <p><strong>Start Date:</strong> {{ user_policy.start_date }}</p>
+                            <p><strong>End Date:</strong> {{ user_policy.end_date }}</p>
+                            <div class="policy-actions">
+                                <!-- Upgrade or Downgrade Button -->
+                                <a href="{% url 'upgrade_policy' user_policy.policy.name %}" class="action-button upgrade-button">
+                                    Upgrade or Downgrade Policy
+                                </a>
+                                <!-- Delete Policy Button -->
+                                <a href="{% url 'delete_policy' user_policy.policy.name %}" class="action-button delete-button">
+                                    Delete Policy
+                                </a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No policies purchased yet.</p>
+            {% endif %}
+        </section>
 
-                    <!-- Button to delete policy -->
-                    <a href="{% url 'delete_policy' user_policy.policy.name %}">Delete Policy</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No policies purchased yet.</p>
-    {% endif %}
-    
-    <a href="{% url 'update_profile' %}">Update Profile</a>
+        <!-- Update Profile Button -->
+        <div class="update-profile-container">
+            <a href="{% url 'update_profile' %}" class="update-profile-button">Update Profile</a>
+        </div>
+    </div>
 </body>
 </html>

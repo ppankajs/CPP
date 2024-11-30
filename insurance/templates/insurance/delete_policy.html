@@ -1,25 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Policy</title>
+    <link rel="stylesheet" href="{% static 'insurance/delete_policy.css' %}">
 </head>
-<body>
+<body style="background: url('{% static "images/bike.jpeg" %}') no-repeat center center fixed; background-size: cover;">
+    <!-- Navbar -->
     <nav>
         <a href="{% url 'home' %}">Home</a>
-        <!-- <a href="{% url 'profile' %}">Profile</a> -->
-        <a href="{% url 'profile' %}" class="welcome-message">Welcome, {{ user.username }}</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'view_all_users' %}" class="button">View Users</a>
+                {% endif %}
+                <a href="{% url 'profile' %}" class="welcome-message">Welcome, {{ user.username }}</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Register</a>
+            {% endif %}
+        </div>
     </nav>
-
-    <h1>Delete Policy</h1>
-
-    <p>Are you sure you want to delete the policy: <strong>{{ policy_name }}</strong>?</p>
     
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'profile' %}">Cancel</a>
-    </form>
+    <!-- Delete Policy Container -->
+    <div class="profile-container">
+        <h1>Delete Policy</h1>
+        <section class="delete-policy-details">
+            <p>Are you sure you want to delete the policy: <strong>{{ policy_name }}</strong>?</p>
+            <div class="policy-actions">
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="action-button delete-button">Yes, Delete</button>
+                </form>
+                <a href="{% url 'profile' %}" class="action-button cancel-button">Cancel</a>
+            </div>
+        </section>
+    </div>
 </body>
 </html>

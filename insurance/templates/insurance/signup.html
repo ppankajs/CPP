@@ -1,18 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'insurance/signup.css' %}">
 </head>
-<body>
-    <h1>Signup</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+<body style="background-image: url('{% static 'images/bike.jpeg' %}'); background-size: cover; background-position: center;">
+    <div class="signup-container">
+        <h1>Signup</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Register</button>
+        </form>
+        <div class="form-links">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+        </div>
+    </div>
 </body>
 </html>
-    <!-- <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p> -->

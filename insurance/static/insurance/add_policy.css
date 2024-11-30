@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    position: relative; /* To position the background image */
+}
+
+/* Background Image with Blur Effect */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('{% static "images/bike.jpeg" %}') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(8px); /* Apply the blur effect */
+    z-index: -1; /* Ensure it stays behind the content */
+}
+
+/* Navbar styles */
+nav {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 99%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-message {
+    margin-right: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Page Title */
+h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Container */
+form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+    max-width: 500px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: 100px auto;
+}
+
+/* Label Styling */
+form label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Input and Textarea Styling */
+form input[type="text"],
+form input[type="number"],
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus Effect */
+form input:focus,
+form textarea:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 5px rgba(37, 117, 252, 0.3);
+    outline: none;
+}
+
+/* Submit Button */
+form button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #2575fc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #1b5bbc;
+    box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3);
+}
+
+/* Back to Home Link */
+a {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #2575fc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #1b5bbc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    form {
+        padding: 15px 20px;
+    }
+
+    form button {
+        font-size: 14px;
+    }
+}

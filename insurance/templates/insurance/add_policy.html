@@ -1,10 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Add New Policy</title>
+    <link rel="stylesheet" href="{% static 'insurance/add_policy.css' %}">
 </head>
-<body>
+<body style="background: url('{% static "images/bike.jpeg" %}') no-repeat center center fixed; background-size: cover;">
     <h1>Add New Policy</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -17,11 +19,11 @@
         <label for="price">Price:</label>
         <input type="number" name="price" step="0.01" required><br>
 
-        <label for="default">Mark as Default:</label>
-        <input type="checkbox" name="default"><br>
+        <!-- <label for="default">Mark as Default:</label>
+        <input type="checkbox" name="default"><br> -->
 
-        <label for="image">Policy Image:</label>
-        <input type="file" name="image"><br>
+        <!-- <label for="image">Policy Image:</label>
+        <input type="file" name="image"><br> -->
 
         <button type="submit">Add Policy</button>
     </form>

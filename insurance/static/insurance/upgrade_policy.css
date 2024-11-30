@@ -1,0 +1,121 @@
+/* Reset default margins and padding for body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Navbar styles */
+nav {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 99%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transform: scale(1.05);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-message {
+    margin-right: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Page styling */
+h1 {
+    text-align: center;
+    margin-top: 80px;
+    font-size: 36px;
+    color: #333;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    max-width: 800px;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+/* Form styling */
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}

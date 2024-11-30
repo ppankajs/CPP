@@ -1,0 +1,115 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-Page Layout */
+body {
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container for the Login Form */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Form Styling */
+.login-form {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Form Title */
+.login-form h1 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Fields Styling */
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus Effect on Input Fields */
+.form-field input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Submit Button Styling */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover Effect */
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+/* Form Links */
+.form-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-links p {
+    font-size: 16px;
+}
+
+.form-links a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+}
+
+/* Error Messages Styling */
+form .non_field_errors {
+    color: red;
+    margin-bottom: 20px;
+    text-align: center;
+}

@@ -1,0 +1,103 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    background-image: url("{% static 'images/bike.jpeg' %}"); /* Correct path to the static image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+    position: relative;
+}
+
+/* Semi-transparent overlay for background */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: -1;
+}
+
+/* Main Container */
+h2 {
+    font-size: 28px;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+p {
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    margin: 15px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+h3 {
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Policy Image Styling */
+img {
+    display: block;
+    margin: 20px auto;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Back to Home Link */
+a {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    a {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}

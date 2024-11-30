@@ -32,5 +32,8 @@ class UserPolicy(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    class Meta:
+        unique_together = ('user', 'policy','plan')
+        
     def __str__(self):
         return f"{self.user.username} - {self.policy.name}"

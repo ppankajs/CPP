@@ -1,25 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'insurance/login.css' %}">
 </head>
-<body>
-    <h1>Login</h1>
-    <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div>
-            {{ form.username.label_tag }} {{ form.username }}
+<body style="background-image: url('{% static 'images/bike.jpeg' %}'); background-size: cover; background-position: center;">
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Login</h1>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-field">
+                    {{ form.username.label_tag }} 
+                    {{ form.username }}
+                </div>
+                <div class="form-field">
+                    {{ form.password.label_tag }} 
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            <div class="form-links">
+                <p>Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
+            </div>
         </div>
-        <div>
-            {{ form.password.label_tag }} {{ form.password }}
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <div class="form-links">
-        <!-- <a href="#">Forgot password?</a> -->
-        <p>Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
     </div>
 </body>
 </html>
