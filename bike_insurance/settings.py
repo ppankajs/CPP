@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)1md1@uhfrb9ly40$4idlqte-3g=ukju&v4=sivvyxsqgt9sn(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['56f9b2c523404b958162d3ba8a91cf28.vfs.cloud9.us-east-1.amazonaws.com', '127.0.0.1']
+ALLOWED_HOSTS = ['56f9b2c523404b958162d3ba8a91cf28.vfs.cloud9.us-east-1.amazonaws.com', '*']
 
 
 # Application definition
@@ -142,3 +142,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_TRUSTED_ORIGINS = [
     'https://56f9b2c523404b958162d3ba8a91cf28.vfs.cloud9.us-east-1.amazonaws.com',
 ]
+
+# # AWS S3 settings
+# AWS_STORAGE_BUCKET_NAME = 'prasannacpp'  # Replace with your S3 bucket name
+# AWS_S3_REGION_NAME = 'us-east-1'  # Replace with your region
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+# # Static and media file settings
+# # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'  # For static files
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}.s3.us-east-1.amazonaws.com/bike.jpeg/'  # For media files
+
+# # Set the default file storage backend to S3
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'

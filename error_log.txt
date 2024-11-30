@@ -1,0 +1,49 @@
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/lib64/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/utils/autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/core/management/commands/runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/core/management/base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+?: (urls.E006) The MEDIA_URL setting must end with a slash.
+
+WARNINGS:
+?: (staticfiles.W004) The directory '/home/ec2-user/environment/CPP/static' in the STATICFILES_DIRS setting does not exist.
+
+System check identified 2 issues (0 silenced).
+/home/ec2-user/environment/CPP/bike_insurance/settings.py changed, reloading.
+Performing system checks...
+
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/usr/lib64/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/utils/autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/core/management/commands/runserver.py", line 133, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/ec2-user/environment/env/lib64/python3.9/site-packages/django/core/management/base.py", line 556, in check
+    raise SystemCheckError(msg)
+django.core.management.base.SystemCheckError: SystemCheckError: System check identified some issues:
+
+ERRORS:
+?: (urls.E006) The MEDIA_URL setting must end with a slash.
+
+WARNINGS:
+?: (staticfiles.W004) The directory '/home/ec2-user/environment/CPP/static' in the STATICFILES_DIRS setting does not exist.
+
+System check identified 2 issues (0 silenced).
+Performing system checks...
+

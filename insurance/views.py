@@ -342,3 +342,4 @@ def delete_policy_admin(request, policy_name):
     return render(request, 'insurance/delete_policy_admin.html', {
         'policy_name': policy_name,
     })
+    
