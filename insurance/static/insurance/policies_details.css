@@ -1,61 +1,80 @@
-/* General Body Styling */
+/* Reset body styling */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    background-image: url("{% static 'images/bike.jpeg' %}"); /* Correct path to the static image */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
+    font-family: Arial, sans-serif;
     position: relative;
 }
 
-/* Semi-transparent overlay for background */
+/* Overlay for background with semi-transparent effect */
 body::after {
     content: "";
-    position: absolute;
+    position: fixed; /* Ensures it covers the viewport */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-    z-index: -1;
+    z-index: -1; /* Puts it behind all other content */
 }
 
-/* Main Container */
-h2 {
-    font-size: 28px;
-    color: #fff;
+/* Navbar styling */
+nav {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 99%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-message {
+    margin-right: 10px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+/* Main Content */
+.content {
+    margin-top: 100px; /* Space for the navbar */
     text-align: center;
-    margin-top: 20px;
+    color: #fff;
+    padding: 20px;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
 }
 
-p {
+.content p {
     font-size: 18px;
-    color: #fff;
-    text-align: center;
-    margin: 15px;
+    margin: 15px 0;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-h3 {
-    font-size: 22px;
-    color: #fff;
-    text-align: center;
-    margin-top: 20px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
-}
-
-/* Policy Image Styling */
-img {
+.content img {
     display: block;
     margin: 20px auto;
     max-width: 90%;
@@ -63,10 +82,9 @@ img {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Back to Home Link */
-a {
+.content .back-home {
     display: inline-block;
-    margin: 20px auto;
+    margin-top: 20px;
     padding: 12px 20px;
     background-color: #007bff;
     color: #fff;
@@ -77,26 +95,32 @@ a {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-a:hover {
+.content .back-home:hover {
     background-color: #0056b3;
     box-shadow: 0 4px 15px rgba(0, 86, 179, 0.5);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    h2 {
+    .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-right a {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .content h2 {
         font-size: 24px;
     }
 
-    h3 {
-        font-size: 20px;
-    }
-
-    p {
+    .content p {
         font-size: 16px;
     }
 
-    a {
+    .content .back-home {
         font-size: 14px;
         padding: 10px 15px;
     }

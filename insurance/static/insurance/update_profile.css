@@ -53,9 +53,7 @@ nav a:hover {
     max-width: 500px;
     width: 90%;
     text-align: center;
-    position: relative;
 }
-
 /* Form Title */
 h1 {
     font-size: 28px;

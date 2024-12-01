@@ -7,6 +7,10 @@ from django.contrib import messages
 from .models import Profile, UserPolicy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+from datetime import timedelta
+# from alphabet_sorter.sorting import ascending_sort
+
 
 def home(request):
     default_policies = Policy.objects.filter(default=True)
@@ -79,6 +83,22 @@ def user_profile(request):
         'profile': profile,
         'purchased_policies': purchased_policies
     })
+
+# @login_required
+# def user_profile(request):
+#     # Check if the user has a profile; create one if not
+#     profile, created = Profile.objects.get_or_create(user=request.user)
+
+#     # Get the user's purchased policies
+#     purchased_policies = UserPolicy.objects.filter(user=request.user)
+
+#     # Sort the policies by policy name using the custom library
+#     sorted_policies = ascending_sort(list(purchased_policies), key=lambda p: p.policy.name)
+
+#     return render(request, 'insurance/profile.html', {
+#         'profile': profile,
+#         'purchased_policies': sorted_policies,
+#     })
     
 @login_required
 def update_profile(request):
@@ -152,33 +172,6 @@ def delete_policy(request, policy_name):
         'user_policies': user_policies,
     })
     
-from django.utils.timezone import now
-from datetime import timedelta
-
-
-# @login_required
-# def buy_policy(request, policy_name):
-#     policy = get_object_or_404(Policy, name=policy_name)
-
-#     # Check if the user already owns this policy with the same plan
-#     existing_policy = UserPolicy.objects.filter(user=request.user, policy=policy, plan='Basic').first()
-#     if existing_policy:
-#         messages.warning(request, f"You have already purchased the policy: {policy.name} with the Annual plan.")
-#         return redirect('profile')
-
-#     # Create the new policy purchase
-#     UserPolicy.objects.create(
-#         user=request.user,
-#         policy=policy,
-#         plan='Basic',  # Default plan
-#         start_date=now().date(),
-#         end_date=(now() + timedelta(days=365)).date()
-#     )
-#     messages.success(request, f"You have purchased the policy: {policy.name}.")
-#     return redirect('profile')
-
-from django.utils.timezone import now
-from datetime import timedelta
 
 @login_required
 def buy_policy(request, policy_name):
@@ -226,31 +219,6 @@ def add_policy(request):
         return redirect('home')
 
     return render(request, 'insurance/add_policy.html')
-
-# @login_required
-# def upgrade_policy(request, policy_name):
-#     # Fetch the relevant policy and user policy
-#     policy = get_object_or_404(Policy, name=policy_name)
-#     user_policy = get_object_or_404(UserPolicy, user=request.user, policy=policy)
-
-#     if request.method == 'POST':
-#         # Get the selected plan from the form
-#         new_plan = request.POST.get('plan')
-        
-#         if new_plan not in ['Basic', 'Standard','Premium']:
-#             messages.error(request, "Invalid plan selected.")
-#             return redirect('profile')
-
-#         user_policy.plan = new_plan
-#         user_policy.save()
-
-#         messages.success(request, f"Your policy has been updated to the '{new_plan}' plan.")
-#         return redirect('profile')
-
-#     return render(request, 'insurance/upgrade_policy.html', {
-#         'user_policy': user_policy,
-#         'available_plans': ['Basic', 'Standard','Premium'],  # List of plans
-#     })
 
 @login_required
 def upgrade_policy(request, policy_name):

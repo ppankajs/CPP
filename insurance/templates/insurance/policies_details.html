@@ -1,4 +1,3 @@
-<!-- policies_details.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,17 +5,39 @@
     <title>Policy Details</title>
     <link rel="stylesheet" href="{% static 'insurance/policies_details.css' %}">
 </head>
-<body>
-    <h2>{{ policy.name }}</h2>
-    <p>{{ policy.description }}</p>
-    {% if policy.image %}
-        <img src="{{ policy.image.url }}" alt="Policy Image">
-    {% endif %}
-    {% if policy.additional_details %}
-        <h3>Additional Details:</h3>
-        <p>{{ policy.additional_details }}</p>
-    {% endif %}
-    <p>Price: ${{ policy.price }}</p>
-    <a href="{% url 'home' %}">Back to Home</a>
+<body style="background: url('{% static "images/bike.jpeg" %}') no-repeat center center fixed; background-size: cover;">
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <!-- Admin button to view all users and their policies -->
+                    <a href="{% url 'view_all_users' %}" class="button">View Users</a>
+                {% endif %}
+                <a href="{% url 'profile' %}" class="welcome-message">Welcome, {{ user.username }}</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>{{ policy.name }}</h2>
+        <p>{{ policy.description }}</p>
+        {% if policy.image %}
+            <img src="{{ policy.image.url }}" alt="Policy Image">
+        {% endif %}
+        {% if policy.additional_details %}
+            <h3>Additional Details:</h3>
+            <p>{{ policy.additional_details }}</p>
+        {% endif %}
+        <p>Price: ${{ policy.price }}</p>
+    </div>
+
 </body>
 </html>
