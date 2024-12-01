@@ -1,16 +1,8 @@
-# ascending_sort.py
+# alphabet_sorter/sorting.py
 
-def sort_alphabetically(input_list):
-    """
-    Sorts a given list of strings in ascending order alphabetically.
-    Args:
-    - input_list (list): List of strings to be sorted.
-
-    Returns:
-    - list: Sorted list of strings.
-    """
-    if not all(isinstance(item, str) for item in input_list):
-        raise ValueError("All elements in the list must be strings")
+def sort_alphabetically(data):
+    """Sort a list of strings in ascending alphabetical order."""
+    if not isinstance(data, list):
+        raise TypeError("Input must be a list.")
     
-    return sorted(input_list)
-
+    return sorted(data)

@@ -7,7 +7,7 @@
     <title>Upgrade Policy</title>
     <link rel="stylesheet" href="{% static 'insurance/upgrade_policy.css' %}">
 </head>
-<body style="background: url('{% static "images/bike.jpeg" %}') no-repeat center center fixed; background-size: cover;">
+<body style="background: url('{{ s3_image_url }}') no-repeat center center fixed; background-size: cover;">
     <!-- Navbar -->
     <nav>
         <a href="{% url 'home' %}">Home</a>

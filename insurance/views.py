@@ -12,14 +12,28 @@ from datetime import timedelta
 # from alphabet_sorter.sorting import ascending_sort
 
 
+# def home(request):
+#     default_policies = Policy.objects.filter(default=True)
+#     other_policies = Policy.objects.filter(default=False)
+#     return render(request, 'insurance/home.html', {
+#         'default_policies': default_policies,
+#         'other_policies': other_policies,
+#     })
 def home(request):
+    # Query for policies
     default_policies = Policy.objects.filter(default=True)
     other_policies = Policy.objects.filter(default=False)
+
+    # Add the S3 image URL to the context
+    s3_image_url = "https://elasticbeanstalk-us-east-1-779777417450.s3.amazonaws.com/bike.jpeg"
+
+    # Pass the S3 URL along with policies to the template
     return render(request, 'insurance/home.html', {
         'default_policies': default_policies,
         'other_policies': other_policies,
+        's3_image_url': s3_image_url,  # Add the S3 URL here
     })
-    
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

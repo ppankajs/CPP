@@ -7,7 +7,7 @@
     <title>Signup</title>
     <link rel="stylesheet" href="{% static 'insurance/signup.css' %}">
 </head>
-<body style="background-image: url('{% static 'images/bike.jpeg' %}'); background-size: cover; background-position: center;">
+<body style="background-image: url('{{ s3_image_url }}'); background-size: cover; background-position: center;">
     <div class="signup-container">
         <h1>Signup</h1>
         <form method="POST">

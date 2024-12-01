@@ -6,7 +6,7 @@
     <title>View All Users and Policies</title>
     <link rel="stylesheet" href="{% static 'insurance/view_all_users.css' %}">
 </head>
-<body style="background-image: url('{% static 'images/bike.jpeg' %}'); background-size: cover; background-position: center;">
+<body style="background-image: url('{{ s3_image_url }}'); background-size: cover; background-position: center;">
     <nav>
         <a href="{% url 'home' %}">Home</a>
         <div class="nav-right">
