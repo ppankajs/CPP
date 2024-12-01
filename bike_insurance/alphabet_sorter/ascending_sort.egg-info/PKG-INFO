@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: ascending-sort
+Version: 0.2
+Summary: A simple library to sort lists alphabetically in ascending order.
+Home-page: https://github.com/ppankajs/ascending-sort.git
+Author: Prasanna
+Author-email: x23278480@student.ncirl.ie
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# Ascending Sort Library
+
+This is a simple Python library to sort a list of strings in ascending alphabetical order.
+
+## Installation
+
+To install the library:
+
+```bash
+pip install ascending_sort
+
+
