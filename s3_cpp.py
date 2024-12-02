@@ -1,74 +1,59 @@
-# import boto3
-# import os
-
-# def upload_image_to_s3(bucket_name="elasticbeanstalk-us-east-1-779777417450", 
-#                       image_path="/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg", 
-#                       image_name="bike.jpeg"):
-
-#     # Initialize S3 client
-#     s3_client = boto3.client("s3")
-    
-#     try:
-#         # Upload the image to the specified S3 bucket
-#         s3_client.upload_file(image_path, bucket_name, image_name)
-#         print(f"Image {image_path} uploaded to {bucket_name}/{image_name}.")
-        
-#         # Generate a public S3 URL (if bucket policy allows public access)
-#         s3_url = f"https://{bucket_name}.s3.amazonaws.com/{image_name}"
-#         print(f"Public URL: {s3_url}")
-#         return s3_url
-#     except Exception as e:
-#         print(f"Error uploading image: {e}")
-#         return None
-
-# # Call the function
-# if __name__ == "__main__":
-#     bucket_name = "elasticbeanstalk-us-east-1-779777417450"
-#     image_path = "/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg"
-#     image_name = "bike.jpeg"
-
-#     # Upload the image to S3
-#     s3_url = upload_image_to_s3(bucket_name, image_path, image_name)
-
-#     # If successful, print the image URL
-#     if s3_url:
-#         print(f"Image uploaded successfully. URL: {s3_url}")
 import boto3
-import os
+from botocore.exceptions import ClientError
 
-def upload_image_to_s3(bucket_name="elasticbeanstalk-us-east-1-779777417450", 
-                       image_path="/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg", 
-                       image_name="bike.jpeg"):
+def create_bucket(bucket_name="prasannacpp", region="us-east-1"):
+    """Create an S3 bucket in the specified region."""
+    s3_client = boto3.client('s3', region_name=region)
+    try:
+        # Check if the bucket exists
+        s3_client.head_bucket(Bucket=bucket_name)
+        print(f"Bucket {bucket_name} already exists.")
+    except ClientError as e:
+        if e.response['Error']['Code'] == '404':
+            # Bucket does not exist, so create it
+            print(f"Bucket {bucket_name} does not exist. Creating...")
+            if region == "us-east-1":
+                s3_client.create_bucket(Bucket=bucket_name)
+            else:
+                location = {'LocationConstraint': region}
+                s3_client.create_bucket(Bucket=bucket_name,
+                                        CreateBucketConfiguration=location)
+            print(f"Bucket {bucket_name} created successfully.")
+        else:
+            print(f"Error checking bucket existence: {e}")
 
-    # Initialize S3 client
-    s3_client = boto3.client("s3")
-    
+def upload_image_to_s3(bucket_name= "prasannacpp" , region = "us-east-1", image_path = "/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg", image_name = "bike.jpeg"):
+    """Upload an image to S3 and return a pre-signed URL."""
+    s3_client = boto3.client("s3", region_name=region)
     try:
         # Upload the image to the specified S3 bucket
         s3_client.upload_file(image_path, bucket_name, image_name)
         print(f"Image {image_path} uploaded to {bucket_name}/{image_name}.")
         
-        # Set the object ACL to public-read to make it publicly accessible
-        s3_client.put_object_acl(ACL="public-read", Bucket=bucket_name, Key=image_name)
-        print(f"ACL set to public-read for {image_name}.")
-
-        # Generate a public S3 URL (if bucket policy allows public access)
-        s3_url = f"https://{bucket_name}.s3.amazonaws.com/{image_name}"
-        print(f"Public URL: {s3_url}")
-        return s3_url
+        # Generate a pre-signed URL for accessing the image
+        pre_signed_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': bucket_name, 'Key': image_name},
+            ExpiresIn=3600  # URL valid for 1 hour
+        )
+        print(f"Pre-signed URL: {pre_signed_url}")
+        return pre_signed_url
     except Exception as e:
         print(f"Error uploading image: {e}")
         return None
 
-# Call the function
+# Main function
 if __name__ == "__main__":
-    bucket_name = "elasticbeanstalk-us-east-1-779777417450"
-    image_path = "/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg"
-    image_name = "bike.jpeg"
+    bucket_name = "prasannacpp"  # Replace with your bucket name
+    region = "us-east-1"  # Replace with your region
+    image_path = "/home/ec2-user/environment/CPP/insurance/static/images/bike.jpeg"  # Replace with your image path
+    image_name = "bike.jpeg"  # Replace with your desired object name in S3
 
-    # Upload the image to S3
-    s3_url = upload_image_to_s3(bucket_name, image_path, image_name)
+    # Check if the bucket exists or create it
+    create_bucket(bucket_name, region)
 
-    # If successful, print the image URL
-    if s3_url:
-        print(f"Image uploaded successfully. URL: {s3_url}")
+    # Upload the image to S3 and generate a pre-signed URL
+    pre_signed_url = upload_image_to_s3(bucket_name, region, image_path, image_name)
+
+    if pre_signed_url:
+        print(f"Access the uploaded image using the following URL:\n{pre_signed_url}")

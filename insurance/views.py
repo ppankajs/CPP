@@ -1,3 +1,24 @@
+# from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth import login, authenticate, logout
+# from django.shortcuts import render, redirect
+# from .forms import CustomUserCreationForm, AuthenticationForm
+# from .models import Policy
+# from django.contrib import messages 
+# from .models import Profile, UserPolicy
+# from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.models import User
+# from django.utils.timezone import now
+# from datetime import timedelta
+
+# def home(request):
+#     default_policies = Policy.objects.filter(default=True)
+#     other_policies = Policy.objects.filter(default=False)
+#     return render(request, 'insurance/home.html', {
+#         'default_policies': default_policies,
+#         'other_policies': other_policies,
+#     })
+
+import boto3
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
@@ -9,30 +30,101 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from datetime import timedelta
-# from alphabet_sorter.sorting import ascending_sort
+import uuid
 
+# Create SNS topic and subscribe to email
+# def create_sns_topic(topic_name):
+#     sns_client = boto3.client('sns')
+#     response = sns_client.create_topic(Name=topic_name)
+#     return response['TopicArn']
 
-# def home(request):
-#     default_policies = Policy.objects.filter(default=True)
-#     other_policies = Policy.objects.filter(default=False)
-#     return render(request, 'insurance/home.html', {
-#         'default_policies': default_policies,
-#         'other_policies': other_policies,
-#     })
-def home(request):
-    # Query for policies
-    default_policies = Policy.objects.filter(default=True)
-    other_policies = Policy.objects.filter(default=False)
+# def subscribe_email_to_topic(topic_arn, email_address):
+#     sns_client = boto3.client('sns')
+#     sns_client.subscribe(
+#         TopicArn=topic_arn,
+#         Protocol='email',
+#         Endpoint=email_address
+#     )
+#     print(f"Subscription request sent to {email_address}")
 
-    # Add the S3 image URL to the context
-    s3_image_url = "https://elasticbeanstalk-us-east-1-779777417450.s3.amazonaws.com/bike.jpeg"
+# def send_user_creation_notification(topic_arn, user_email):
+#     sns_client = boto3.client('sns')
+#     message = f"A new user with email {user_email} has been successfully created!"
+#     sns_client.publish(
+#         TopicArn=topic_arn,
+#         Message=message,
+#         Subject="New User Registration Notification"
+#     )
 
-    # Pass the S3 URL along with policies to the template
-    return render(request, 'insurance/home.html', {
-        'default_policies': default_policies,
-        'other_policies': other_policies,
-        's3_image_url': s3_image_url,  # Add the S3 URL here
-    })
+# # Send message to SQS after user registration
+# def send_message_to_sqs(user_email):
+#     sqs_client = boto3.client('sqs')
+#     queue_url = 'https://sqs.us-east-1.amazonaws.com/779777417450/PendingMails.fifo'  # Replace with your SQS URL
+#     message_body = f"New user registered with email: {user_email}"
+
+#     deduplication_id = str(uuid.uuid4())  # Using a random UUID for deduplication
+
+#     response = sqs_client.send_message(
+#         QueueUrl=queue_url,
+#         MessageBody=message_body,
+#         MessageGroupId='user-registration',  # FIFO queues require a MessageGroupId
+#         MessageDeduplicationId=deduplication_id  # Use unique ID for each message
+#     )
+    
+#     print(f"Message sent to SQS: {response['MessageId']}")
+
+# # Signup view to register user and send SNS notification and SQS message
+# def signup(request):
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             profile, created = Profile.objects.get_or_create(user=user)
+#             profile.phone_number = form.cleaned_data.get('phone_number')
+#             profile.save()
+
+#             # Authenticate and log in the user
+#             user = authenticate(username=user.username, password=form.cleaned_data['password1'])
+#             if user is not None:
+#                 login(request, user)
+#                 messages.success(request, "Signup successful! You are now logged in.")
+                
+#                 # Add SNS logic after successful signup
+#                 topic_name = "UserRegistrationNotifications"  # Name of the SNS topic
+#                 topic_arn = create_sns_topic(topic_name)  # Create SNS topic
+#                 user_email = user.email  # The newly created user's email
+                
+#                 # Subscribe the admin email to the topic (replace with your admin email)
+#                 admin_email = "maverickshinde@gmail.com"  # Your admin email to receive notifications
+#                 subscribe_email_to_topic(topic_arn, admin_email)
+                
+#                 # Send notification about the new user creation to SNS
+#                 send_user_creation_notification(topic_arn, user_email)
+
+#                 # Send a message to SQS with the new user email
+#                 send_message_to_sqs(user_email)
+                
+#                 return redirect('home')
+#     else:
+#         form = CustomUserCreationForm()
+
+#     return render(request, 'insurance/signup.html', {'form': form})
+
+import json
+import boto3
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from .forms import CustomUserCreationForm
+
+def invoke_lambda(function_name, payload):
+    lambda_client = boto3.client('lambda')
+    response = lambda_client.invoke(
+        FunctionName=function_name,
+        InvocationType='RequestResponse',  # Synchronous invocation
+        Payload=json.dumps(payload)
+    )
+    return json.loads(response['Payload'].read())
 
 def signup(request):
     if request.method == 'POST':
@@ -48,11 +140,102 @@ def signup(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Signup successful! You are now logged in.")
+
+                # Prepare data for Lambda
+                payload = {
+                    "topic_name": "UserRegistrationNotifications",
+                    "user_email": user.email,
+                    "admin_email": "maverickshinde@gmail.com",  # Replace with your admin email
+                    "queue_url": "https://sqs.us-east-1.amazonaws.com/779777417450/PendingMails.fifo"
+                }
+
+                # Invoke Lambda function
+                function_name = "sqs"  # Replace with your Lambda function name
+                try:
+                    lambda_response = invoke_lambda(function_name, payload)
+
+                    if lambda_response.get("status") == "success":
+                        messages.info(request, "SNS and SQS operations were successful.")
+                    else:
+                        messages.error(request, f"Failed to complete SNS/SQS operations: {lambda_response.get('message')}")
+                except Exception as e:
+                    messages.error(request, f"Error invoking Lambda: {str(e)}")
+
                 return redirect('home')
     else:
         form = CustomUserCreationForm()
 
     return render(request, 'insurance/signup.html', {'form': form})
+# def home(request):
+#     # Query for policies
+#     default_policies = Policy.objects.filter(default=True)
+#     other_policies = Policy.objects.filter(default=False)
+
+#     # Add the S3 image URL to the context
+#     s3_image_url = "https://elasticbeanstalk-us-east-1-779777417450.s3.amazonaws.com/bike.jpeg"
+
+#     # Pass the S3 URL along with policies to the template
+#     return render(request, 'insurance/home.html', {
+#         'default_policies': default_policies,
+#         'other_policies': other_policies,
+#         's3_image_url': s3_image_url,  # Add the S3 URL here
+#     })
+
+
+
+from botocore.exceptions import ClientError
+def generate_presigned_url(bucket_name, object_name, region="us-east-1", expiration=3600):
+    """Generate a pre-signed URL to access an S3 object."""
+    s3_client = boto3.client('s3', region_name=region)
+    try:
+        response = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': bucket_name, 'Key': object_name},
+            ExpiresIn=expiration  # URL valid for 1 hour
+        )
+        return response
+    except ClientError as e:
+        print(f"Error generating pre-signed URL: {e}")
+        return None
+        
+def home(request):
+    # Query for policies
+    default_policies = Policy.objects.filter(default=True)
+    other_policies = Policy.objects.filter(default=False)
+
+    # Generate a pre-signed URL for the image
+    bucket_name = "prasannacpp"
+    image_name = "bike.jpeg"
+    s3_image_url = generate_presigned_url(bucket_name, image_name)
+
+    # Pass the pre-signed URL along with policies to the template
+    return render(request, 'insurance/home.html', {
+        'default_policies': default_policies,
+        'other_policies': other_policies,
+        's3_image_url': s3_image_url,  # Add the dynamic S3 URL here
+    })
+
+
+    
+# def signup(request):
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             profile, created = Profile.objects.get_or_create(user=user)
+#             profile.phone_number = form.cleaned_data.get('phone_number')
+#             profile.save()
+
+#             # Authenticate and log in the user
+#             user = authenticate(username=user.username, password=form.cleaned_data['password1'])
+#             if user is not None:
+#                 login(request, user)
+#                 messages.success(request, "Signup successful! You are now logged in.")
+#                 return redirect('home')
+#     else:
+#         form = CustomUserCreationForm()
+
+#     return render(request, 'insurance/signup.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -271,22 +454,22 @@ def upgrade_policy(request, policy_name):
     })
 
 
-@login_required
-def view_all_users(request):
-    # Check if the user is an admin
-    if not request.user.is_staff:
-        return redirect('home')  # Redirect if the user is not an admin
+# @login_required
+# def view_all_users(request):
+#     # Check if the user is an admin
+#     if not request.user.is_staff:
+#         return redirect('home')  # Redirect if the user is not an admin
 
-    # Get all users and their associated policies
-    users_with_policies = User.objects.all()  # Get all users
-    user_policies = {}
+#     # Get all users and their associated policies
+#     users_with_policies = User.objects.all()  # Get all users
+#     user_policies = {}
     
-    for user in users_with_policies:
-        user_policies[user] = UserPolicy.objects.filter(user=user)  # Get policies for each user
+#     for user in users_with_policies:
+#         user_policies[user] = UserPolicy.objects.filter(user=user)  # Get policies for each user
 
-    return render(request, 'insurance/view_all_users.html', {
-        'user_policies': user_policies
-    })
+#     return render(request, 'insurance/view_all_users.html', {
+#         'user_policies': user_policies
+#     })
     
 @login_required
 def delete_user(request, username):
@@ -325,3 +508,29 @@ def delete_policy_admin(request, policy_name):
         'policy_name': policy_name,
     })
     
+from alphabet_sorter.sorting import sort_alphabetically  # Import your sorting function
+
+@login_required
+def view_all_users(request):
+    # Check if the user is an admin
+    if not request.user.is_staff:
+        return redirect('home')  # Redirect if the user is not an admin
+
+    # Get all users
+    users_with_policies = list(User.objects.all())  # Convert queryset to list
+
+    # Extract usernames and sort them using the library
+    sorted_usernames = sort_alphabetically([user.username for user in users_with_policies])
+
+    # Map sorted usernames back to user objects
+    sorted_users = sorted(users_with_policies, key=lambda user: sorted_usernames.index(user.username))
+
+    user_policies = {}
+    for user in sorted_users:
+        user_policies[user] = UserPolicy.objects.filter(user=user)  # Get policies for each user
+
+    return render(request, 'insurance/view_all_users.html', {
+        'user_policies': user_policies
+    })
+    
+
